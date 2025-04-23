@@ -1,116 +1,183 @@
 * {
   /* `otf-font-awesome` is required to be installed for icons */
   border: none;
-  border-radius: 12px;
+  border-radius: 0;
   font-family: "JetBrainsMono Nerd Font", "Noto Sans CJK JP";
-  font-size: 16px;
-  min-height: 0px;
-  margin-top: 1px;
-  margin-bottom: 1px;
-  color: rgba(0, 255, 255, 1.000);
-  text-shadow: 0 0 5px rgba(0, 255, 255, 0.7);
-}
-
-box {
-  background-color: rgba(0, 0, 0, 0);
+  font-size: 14px;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  color: rgba(255, 255, 255, 1.000);
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
 }
 
 window#waybar {
-  background: rgba(0, 0, 0, 0.5);
-  border: 2px solid rgba(0, 255, 255, 0.3);
-  box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+  background: rgba(64, 224, 208, 0.8); /* 青绿色背景 */
+  border-bottom: 2px solid rgba(255, 192, 203, 0.8); /* 粉色边框 */
+  box-shadow: 0 0 20px rgba(255, 192, 203, 0.4);
   backdrop-filter: blur(10px);
-  transition-property: background-color;
-  transition-duration: .5s;
-  margin: 10px;
-}
-
-window#waybar.hidden {
-  opacity: 0.2;
-}
-
-
-/*
-window#waybar.empty {
-    background-color: transparent;
-}
-window#waybar.solo {
-    background-color: #FFFFFF;
-}
-*/
-
-window#waybar.termite {
-  background-color: #3F3F3F;
-}
-
-/*
-window#waybar.chromium {
-  background-color: #000000;
-  border: none;
-}
-*/
-
-button {
-  /* Use box-shadow instead of border so the text isn't offset */
-  /* Avoid rounded borders under each button name */
-  border-radius: 12px;
   transition: all 0.3s ease;
-  border: 1px solid rgba(0, 255, 255, 0.2);
-  background: rgba(0, 0, 0, 0.5);
 }
 
-
-/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
-button:hover {
-  background: rgba(0, 255, 255, 0.2);
-  border-color: rgba(0, 255, 255, 0.5);
-  box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+/* 模块通用样式 */
+#workspaces,
+#window,
+#clock,
+#battery,
+#cpu,
+#memory,
+#network,
+#pulseaudio,
+#custom-media,
+#tray,
+#mode,
+#custom-power,
+#custom-home {
+  margin: 0 5px;
+  padding: 0 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 192, 203, 0.5);
+  border-radius: 5px;
+  transition: all 0.3s ease;
 }
 
-
+/* 工作区按钮 */
 #workspaces button {
-  margin-top: 4px;
-  margin-bottom: 4px;
-  margin-left: 10px;
-  border-radius: 12px;
-  padding-left: 10px;
-  padding-right: 10px;
+  margin: 0 2px;
+  padding: 0 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 192, 203, 0.5);
+  border-radius: 5px;
   transition: all 0.3s ease;
-  background: rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 255, 255, 0.2);
 }
 
-
-#workspaces button.visible {}
-
-#workspaces button:hover {}
-
+#workspaces button:hover {
+  background: rgba(255, 192, 203, 0.3);
+  border-color: rgba(255, 192, 203, 0.8);
+  box-shadow: 0 0 10px rgba(255, 192, 203, 0.4);
+}
 
 #workspaces button.active {
-  background: rgba(0, 255, 255, 0.2);
-  border-color: rgba(0, 255, 255, 0.5);
-  box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+  background: rgba(255, 192, 203, 0.4);
+  border-color: rgba(255, 192, 203, 0.9);
+  box-shadow: 0 0 15px rgba(255, 192, 203, 0.5);
+}
+
+#workspaces button.urgent {
+  background: rgba(255, 0, 128, 0.3);
+  border-color: rgba(255, 0, 128, 0.7);
+  box-shadow: 0 0 15px rgba(255, 0, 128, 0.4);
+}
+
+/* 模块悬停效果 */
+#clock:hover,
+#battery:hover,
+#cpu:hover,
+#memory:hover,
+#network:hover,
+#pulseaudio:hover,
+#custom-media:hover,
+#tray:hover,
+#mode:hover,
+#custom-power:hover,
+#custom-home:hover {
+  background: rgba(255, 192, 203, 0.3);
+  border-color: rgba(255, 192, 203, 0.8);
+  box-shadow: 0 0 10px rgba(255, 192, 203, 0.4);
+}
+
+/* 电池状态 */
+#battery.charging {
+  color: rgba(0, 255, 128, 1.000);
+  text-shadow: 0 0 5px rgba(0, 255, 128, 0.7);
+}
+
+#battery.critical:not(.charging) {
+  color: rgba(255, 0, 128, 1.000);
+  text-shadow: 0 0 5px rgba(255, 0, 128, 0.7);
+  animation: blink 0.5s linear infinite alternate;
+}
+
+@keyframes blink {
+  to {
+    background: rgba(255, 0, 128, 0.2);
+    border-color: rgba(255, 0, 128, 0.5);
+    box-shadow: 0 0 10px rgba(255, 0, 128, 0.3);
+  }
+}
+
+/* 网络状态 */
+#network.disconnected {
+  color: rgba(255, 0, 128, 1.000);
+  text-shadow: 0 0 5px rgba(255, 0, 128, 0.7);
+}
+
+/* 音量控制 */
+#pulseaudio.muted {
+  color: rgba(255, 0, 128, 1.000);
+  text-shadow: 0 0 5px rgba(255, 0, 128, 0.7);
+}
+
+/* 任务栏 */
+#taskbar button {
+  margin: 0 2px;
+  padding: 0 5px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 192, 203, 0.5);
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+#taskbar button.active {
+  background: rgba(255, 192, 203, 0.4);
+  border-color: rgba(255, 192, 203, 0.9);
+  box-shadow: 0 0 15px rgba(255, 192, 203, 0.5);
+}
+
+/* 启动器 */
+#custom-launcher {
+  margin: 0 5px;
+  padding: 0 10px;
+  font-size: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 192, 203, 0.5);
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+#custom-launcher:hover {
+  background: rgba(255, 192, 203, 0.3);
+  border-color: rgba(255, 192, 203, 0.8);
+  box-shadow: 0 0 10px rgba(255, 192, 203, 0.4);
+}
+
+/* 托盘 */
+#tray {
+  margin: 0 5px;
+  padding: 0 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 192, 203, 0.5);
+  border-radius: 5px;
+}
+
+#tray > .passive {
+  -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
+  background: rgba(255, 0, 128, 0.3);
+  border-color: rgba(255, 0, 128, 0.7);
+  box-shadow: 0 0 15px rgba(255, 0, 128, 0.4);
 }
 
 #workspaces button.label {
   color: rgba(255, 127, 0, 1);
 }
 
-#workspaces button.urgent {
-  background-color: #FFA07A;
-}
-
 #mode {
   background-color: #64727D;
   border-bottom: 3px solid #ffffff;
-}
-
-#custom-launcher {
-  font-size: 25px;
-  transition: none;
-  padding-left: 50px;
-  padding-right: 50px;
-  background: rgba(255, 255, 255, 0.0);
 }
 
 #taskbar {
@@ -122,29 +189,6 @@ button:hover {
   padding-right: 10px;
   transition: none;
   background: rgba(0, 0, 0, 0.000);
-
-}
-
-#taskbar button.active {
-  background: rgba(0, 0, 0, 0);
-
-}
-
-
-
-#mpd {
-  padding: 0 10px;
-  color: #ffffff;
-}
-
-#window {
-  margin: 0 0px;
-  font-size: 14px;
-}
-
-#workspaces {
-  margin: 0 0px;
-  font-size: 14px;
 }
 
 #custom-power {
@@ -159,7 +203,6 @@ button:hover {
   background: rgba(255, 255, 255, 0.100);
 }
 
-
 #custom-home {
   font-size: 14px;
   margin-top: 4px;
@@ -170,7 +213,6 @@ button:hover {
   padding-right: 13px;
   transition: none;
   background: rgba(255, 255, 255, 0.100);
-
 }
 
 #custom-media {
@@ -186,22 +228,6 @@ button:hover {
 
 /* If workspaces is the rightmost module, omit right margin */
 .modules-right>widget:last-child>#workspaces {}
-
-#clock, #battery, #cpu, #memory, #network, #pulseaudio, #custom-media, #tray, #mode, #custom-power {
-  margin-left: 10px;
-  margin-right: 10px;
-  padding: 5px 10px;
-  border-radius: 12px;
-  background: rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 255, 255, 0.2);
-  transition: all 0.3s ease;
-}
-
-#clock:hover, #battery:hover, #cpu:hover, #memory:hover, #network:hover, #pulseaudio:hover, #custom-media:hover, #tray:hover, #mode:hover, #custom-power:hover {
-  background: rgba(0, 255, 255, 0.2);
-  border-color: rgba(0, 255, 255, 0.5);
-  box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
-}
 
 #clock {
   margin-top: 4px;
@@ -220,26 +246,11 @@ button:hover {
   background: rgba(255, 255, 255, 0.100);
 }
 
-
 #battery.charging,
 #battery.plugged {
   color: rgba(0, 255, 128, 1.000);
   text-shadow: 0 0 5px rgba(0, 255, 128, 0.7);
   background-color: rgba(255, 255, 255, 0.100);
-}
-
-@keyframes blink {
-  to {
-    background: rgba(255, 0, 128, 0.2);
-    border-color: rgba(255, 0, 128, 0.5);
-    box-shadow: 0 0 10px rgba(255, 0, 128, 0.3);
-  }
-}
-
-#battery.critical:not(.charging) {
-  color: rgba(255, 0, 128, 1.000);
-  text-shadow: 0 0 5px rgba(255, 0, 128, 0.7);
-  animation: blink 0.5s linear infinite alternate;
 }
 
 label:focus {
@@ -296,7 +307,6 @@ label:focus {
 #wireplumber.muted {
   background-color: #f53c3c;
 }
-
 
 #custom-media.custom-spotify {
   background-color: #66cc99;
